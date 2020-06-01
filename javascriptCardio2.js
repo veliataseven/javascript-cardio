@@ -68,42 +68,63 @@ function flattenArray(arrays, newArr = []) {
 //letters = /^[A-Za-z]+$/;
 
 function isAnagram(str1, str2) {
-  const newStr1 = {};
-  const newStr2 = {};
-  let big;
-  let small;
-  if (str1.split('').length >= str2.split('').length) {
-    big = str1;
-    small = str2;
-  } else {
-    big = str2;
-    small = str1;
-  }
-
-  big.split('').map((item, i) => {
-    if (!newStr1[item]) {
-      newStr1[item] = 1;
-    } else {
-      newStr1[item]++;
-    }
-
-    if (i < small.length && !newStr2[small[i]]) {
-      newStr2[small[i]] = 1;
-    } else if (i < small.length && newStr2[small[i]]) {
-      newStr2[small[i]]++;
-    }
-  });
-
-  console.log('newStr1', newStr1);
-  console.log('newStr2', newStr2);
+  return formatStr(str1) === formatStr(str2);
 }
+
+// Helper function
+function formatStr(str) {
+  return str.replace(/[^\w]/g, '').toLowerCase().split('').sort().join('');
+}
+
+// function isAnagram(str1, str2) {
+//   const newStr1 = {};
+//   const newStr2 = {};
+//   let big;
+//   let small;
+//   if (str1.split('').length >= str2.split('').length) {
+//     big = str1;
+//     small = str2;
+//   } else {
+//     big = str2;
+//     small = str1;
+//   }
+
+//   big.split('').map((item, i) => {
+//     if (!newStr1[item]) {
+//       newStr1[item] = 1;
+//     } else {
+//       newStr1[item]++;
+//     }
+
+//     if (i < small.length && !newStr2[small[i]]) {
+//       newStr2[small[i]] = 1;
+//     } else if (i < small.length && newStr2[small[i]]) {
+//       newStr2[small[i]]++;
+//     }
+//   });
+
+//   console.log('newStr1', newStr1);
+//   console.log('newStr2', newStr2);
+// }
 
 // CHALLENGE 5: LETTER CHANGES
 // Change every letter of the string to the one that follows it and capitalize the vowels
 // Z should turn to A
 // ex. 'hello there' === 'Ifmmp UIfsf'
 
-function letterChanges(str) {}
+function letterChanges(str) {
+  let newStr = str.toLowerCase().replace(/[a-z]/gi, (char) => {
+    if (char === 'z' || char === 'Z') {
+      return 'a';
+    } else {
+      return String.fromCharCode(char.charCodeAt() + 1);
+    }
+  });
+
+  newStr = newStr.replace(/a|e|i|o|u/gi, (vowel) => vowel.toUpperCase());
+
+  return newStr;
+}
 
 // Call Function
 console.log('###########  longestWord  ########## \n');
@@ -119,7 +140,10 @@ const flattenArrayOut = flattenArray([[1, 2], [3, 4], [5, 6], [7]]);
 console.log('flattenArray', flattenArrayOut);
 console.log('\n');
 console.log('###########  isAnagram  ########## \n');
-// const isAnagramOut =
-isAnagram('elbowwee', 'beloww ! ##  w');
-// console.log('isAnagram', isAnagramOut);
+const isAnagramOut = isAnagram('elbow', 'below');
+console.log('isAnagram', isAnagramOut);
+console.log('\n');
+console.log('###########  letterChanges  ########## \n');
+const letterChangesOut = letterChanges('hello there');
+console.log('isAnagram', letterChangesOut);
 console.log('\n');
